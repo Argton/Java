@@ -1,0 +1,103 @@
+/*
+ Klassen Card
+ 
+ I programmet skall man arbeta med kort. Detta görs enklast och tydligast om man har en separat klass Card där varje
+ objekt av klassen beskriver ett enstaka kort. Din uppgift är nu att konstruera klassen Card . Den skall ha följande 
+ egenskaper:
+ 
+ Den skall vara en subklass till JButton
+ För varje kort skall det finnas en bild (av klassen Icon)
+ Varje kort skall i varje ögonblick befinna sig i något av tillstånden HIDDEN, VISIBLE eller MISSING. 
+ Dessa skall beskrivas med en uppräkningstyp med namnet Status. Denna typ skall deklareras inne i klassen Card.
+ 
+ Om ett kort är synligt skall bilden som hör till kortet visas. Ett dolt kort skall visas med blå färg och ett kort 
+ som befinner sig i tillståndet MISSING skall visas med vit färg.
+ Det skall finnas en konstruktor som har en referens till en ikon (av klassen Icon) som parameter. Ett kort som initieras
+ med denna konstruktor skall få begynnelsetillståndet MISSING.
+ Det skall finnas en konstruktor som har två parametrar: en referens till en ikon (av klassen Icon) samt ett värde  av 
+ typen Status som anger kortets begynnelsetillstånd. 
+ Det skall finnas en metod setStatus som man kan anropa för att ändra ett korts tillstånd. Det nya tillståndet ges som 
+ parameter. 
+ Det skall finnas en metod getStatus som man kan anropa för att avläsa ett korts tillstånd. Tillståndet ges som returvärde. 
+ 
+ Det skall finnas en metod copy som man kan anropa för att skapa ett nytt kort som är en kopia av det aktuella kortet.
+ Kopian skall ha en referens till samma ikon som originalet. Kopian skall dessutom befinna sig i samma tillstånd som 
+ .
+ Det skall finnas en metod equalIcon som man kan anropa för att undersöka om två kort har samma ikon.
+ 
+ OBS! Skriv inte några egna  metoder med namnen getIcon och setIcon eftersom sådana skulle överskugga de  metoder som 
+ ärvs från klassen JButton och dessa behövs för att allt skall fungera på rätt sätt.
+ 
+ 
+ 
+ Tips: Den ärvda metoden setIcon kan användas för att ange vilken bild som skall visas på ett synligt kort. Om man 
+ anropar denna med parametern null kommer ingen bild att visas. Kortets bakgrundsfärg visas då istället 
+ (under förutsättning att egenskapen opaque är sann).
+ */
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import static javax.swing.JOptionPane.*;
+
+public class Card extends JButton{
+  private Status status = Status.HIDDEN; // Default
+  
+  public enum Status {
+    HIDDEN, VISIBLE, MISSING 
+  }
+  
+  public Card(){
+  }
+  
+  public Card(Icon icon){
+    status = Status.HIDDEN;
+    this.setBackground(Color.BLUE);
+this.setOpaque(true);
+this.setIcon(icon);
+  }
+  
+  public Card(Icon icon, Status statu){
+    this.status = statu;
+    if(this.status==Status.MISSING){
+     this.setBackground(Color.WHITE);
+    }
+    else{
+      this.setBackground(Color.BLUE);
+    }
+this.setOpaque(true);
+  }
+  
+  public void setStatus(Status stat){
+    this.status=stat;
+    if(this.status==Status.MISSING){
+     this.setBackground(Color.WHITE);
+    }
+    else{
+      this.setBackground(Color.BLUE);
+    }
+this.setOpaque(true);
+repaint();
+  }
+  
+  public Status getStatus(){
+    return this.status;
+  }
+  
+  public Card copy() {
+    Card card1 = new Card();
+    card1.status = this.status;
+    Icon icon = this.getIcon();
+    card1.setBackground(this.getBackground());
+    card1.setIcon(icon);
+card1.setOpaque(true);
+    return card1;    
+  }
+  
+  public boolean equalIcon(Card a){
+    return a.getIcon()==this.getIcon();
+  }
+}
+
+
+// Ett dolt kort skall visas med blå färg och ett kort som befinner sig i tillståndet MISSING skall visas med vit färg.

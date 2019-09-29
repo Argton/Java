@@ -1,0 +1,33 @@
+/*I programmet behöver man  slumpmässigt välja vilka bilder som skall användas och man behöver också placera ut dem på 
+ ett slumpmässigt sätt i fönstret. Då kan man ha nytta av en metod som flyttar om elementen i en array på ett slumpmässigt
+ sätt. Din uppgift är därför nu att konstruera en klassmetod med namnet randomOrder. Metoden skall läggas i en separat 
+ klass med namnet Tools. Metoden skall ha resultattypen void.  Som enda parameter skall den ha en array där elementen
+ är av typen Object (dvs. en array som kan innehålla referenser till objekt av vilken klass om helst.). När metoden
+ anropas skall den placera om elementen i arrayen på ett slumpmässigt sätt.
+ 
+ Tips. Använd en temporär array inne i metoden och plocka ut ett element i taget från den ursprungliga arrayen och 
+ placera in det på ett slumpmässigt ställe i den temporära arrayen. Om platsen redan är upptagen måste du förstås 
+ slumpa fram en ny plats. När alla elementen är utplacerade kan du sedan kopiera den temporära arrayen till den 
+ ursprungliga.
+ 
+ När klassen Tools med sin klassmetod randomOrder är klar skall den testas med hjälp av det färdiga testprogrammet 
+ Randomtest.*/
+
+import java.util.*;
+public class Tools{
+  
+  public static void randomOrder(Object[] obj ){
+    Random r1=new Random();    
+    Object[] temp =new Object[obj.length]; 
+    for(int i=0; i<obj.length; i++){
+      int pos=r1.nextInt(obj.length);
+      while(temp[pos]!=null){
+        pos=r1.nextInt(obj.length);
+      }
+      temp[pos]=obj[i];      
+    }
+    for(int i=0; i<obj.length; i++){
+      obj[i]=temp[i];
+    }
+  }
+}
